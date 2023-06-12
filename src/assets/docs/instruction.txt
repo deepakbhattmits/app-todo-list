@@ -1,0 +1,5 @@
+1. Run you unbuntu terminal
+
+2. Run command: `utserver -settingspath /opt/utorrent-server-*/ &`
+
+3. Open browser with http://localhost:8080/gui

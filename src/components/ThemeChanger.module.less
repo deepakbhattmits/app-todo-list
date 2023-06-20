@@ -1,7 +1,72 @@
+/* Custom Dark Mode Toggle Element */
 .icon {
-  width: 20px;
-  height: 20px;
-  path {
-    fill: white;
-  }
+  width: 30px;
+  height: 30px;
+}
+.toggleThemeWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.toggleThemeWrapper span {
+  font-size: 28px;
+  margin: 0 4px;
+}
+
+.toggleTheme {
+  position: relative;
+  display: inline-block;
+  height: 34px;
+  width: 60px;
+}
+
+.toggleTheme input {
+  // display: none;
+  background-color: #ccc;
+  // position: absolute;
+  cursor: pointer;
+  // bottom: 0;
+  // left: 0;
+  // right: 0;
+  // top: 0;
+  transition: 0.2s;
+}
+
+// .slider {
+//   background-color: #ccc;
+//   position: absolute;
+//   cursor: pointer;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   transition: 0.2s;
+// }
+
+.toggleTheme input:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: '';
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 26px;
+}
+
+input:checked + :before {
+  transform: translateX(26px);
+}
+
+input:checked {
+  background-color: cornflowerblue;
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }

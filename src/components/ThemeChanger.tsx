@@ -15,69 +15,85 @@
 // )
 // export default ThemeChanger
 
-import { useState, FC, ChangeEventHandler, MouseEventHandler } from 'react'
-import { Button } from 'antd'
+import { useState, FC, useCallback,ChangeEventHandler, MouseEventHandler  } from 'react'
+import { Button, Tooltip } from 'antd'
 import { ReactComponent as SVGsun } from '../assets/icons/icon-sun.svg'
 import { ReactComponent as SVGmoon } from '../assets/icons/icon-moon.svg'
 import styles from './ThemeChanger.module.less'
 
 const ThemeChanger: FC = (): JSX.Element => {
-  const [theme, setTheme] = useState<string>('')
-  const handleTheme: MouseEventHandler<HTMLButtonElement> = (e) => {
-    console.log('e. : ', e.target)
+  const [theme, setTheme] = useState<string>('light')
+  const handleTheme:MouseEventHandler<HTMLButtonElement|HTMLOrSVGElement>=(e) =>
+  {
+    
+    console.log('e. : ',e)
+    // console.log('e. : ',e.target.name)
     // setTheme(e.target.name)
+    if(theme==='light') {
+      setDark()
+    }
+    else {
+      setLight()
+    }
   }
-  // const setDark = () => {
-  //   localStorage.setItem('theme', 'dark')
-  //   setTheme('dark')
-  //   document.documentElement.setAttribute('data-theme', 'dark')
-  // }
+  const setDark = useCallback(() => {
+    localStorage.setItem('theme', 'dark')
+    setTheme('dark')
+    document.documentElement.setAttribute('data-theme', 'dark')
+  },[])
 
-  // const setLight = () => {
-  //   localStorage.setItem('theme', 'light')
-  //   setTheme('light')
-  //   document.documentElement.setAttribute('data-theme', 'light')
-  // }
+  const setLight = useCallback(() => {
+    localStorage.setItem('theme', 'light')
+    setTheme('light')
+    document.documentElement.setAttribute('data-theme', 'light')
+  },[])
 
-  // const storedTheme = localStorage.getItem('theme')
-
-  // const prefersDark =
-  //   window.matchMedia &&
-  //   window.matchMedia('(prefers-color-scheme: dark)').matches
-
-  // const defaultDark =
-  //   storedTheme === 'dark' || (storedTheme === null && prefersDark)
-
-  // if (defaultDark) {
-  //   setDark()
-  // }
-
-  // const toggleTheme: ChangeEventHandler<HTMLInputElement> = (e) => {
-  //   if (e.target.checked) {
-  //     setDark()
-  //   } else {
-  //     setLight()
-  //   }
-  // }
-
-  // console.log('defaultDark :', defaultDark)
   return (
     <div className={styles.toggleThemeWrapper}>
-      {theme === 'dark' ? (
-        <Button name="dark" shape="circle" onClick={handleTheme}>
-          <SVGsun
+       <Tooltip
+            title={`Move to ${!!theme?.match(/dark/i)?.length ? "light" : "dark"}`}
+            placement="bottom"
+          >
+      <Button
+              className={styles.btnTheme}
+             onClick={handleTheme}
+        shape="circle"
+        name={theme === 'dark'?'dark':'light'}
+            >
+              {theme === 'dark' ? (
+                <SVGsun
+            name="dark"
             className={styles.icon}
-            onClick={(e) => e.stopPropagation()}
+            onClick={handleTheme}
+          />
+              ) : (
+                <SVGmoon
+              name="light"
+            className={styles.icon}
+           onClick={handleTheme}
+              
+          />
+              )}
+            </Button>
+    </Tooltip>
+      {/* {theme === 'dark' ? (
+        <Button  name="light" shape="circle" onClick={handleTheme}>
+            <SVGmoon
+              name="light"
+            className={styles.icon}
+            onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
+              
           />
         </Button>
       ) : (
-        <Button name="light" shape="circle" onClick={handleTheme}>
-          <SVGmoon
+        <Button  name="dark" shape="circle" onClick={handleTheme}>
+          <SVGsun
+            name="dark"
             className={styles.icon}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {e.stopPropagation(); e.preventDefault();}}
           />
         </Button>
-      )}
+      )} */}
       {/* <SVGsun className={styles.icon} />
       <label className={styles.toggleTheme} htmlFor="checkbox">
         <input

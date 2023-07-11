@@ -6,7 +6,7 @@ interface IProps {
 }
 const Layout: FC<IProps> = ({ headerContent }): JSX.Element => {
   return (
-    <header className={styles.header}>
+    <header data-testid='header' className={styles.header}>
       {headerContent}
       <ThemeChanger />
     </header>

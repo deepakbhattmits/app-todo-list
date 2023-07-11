@@ -16,6 +16,7 @@ import './App.less'
 import ButtonComp from './components/ButtonComp'
 // import InputComp from './components/InputComp'
 import Layout from './components/Layout'
+import Counts from './components/Counts';
 const Todos: FC = (): JSX.Element => {
   const [form] = Form.useForm()
   const [todo, setTodo] = useState<string>('')
@@ -44,13 +45,13 @@ const Todos: FC = (): JSX.Element => {
       {todos?.length > 0 ? (
         <>
           <span>
-            {todos?.length} todo{todos?.length > 1 ? 's, ' : ', '}
+            {todos?.length} todo{todos?.length > 1 ? 's, ' : ' '}
+          </span>
+        <span>
+            {todos?.filter(({completed}) => completed)?.length>0? `${todos?.filter(({completed}) => completed)?.length} Completed `:null},
           </span>
           <span>
-            {todos?.filter(({ completed }) => completed)?.length} Completed,
-          </span>
-          <span>
-            {todos?.filter(({ completed }) => !completed)?.length} Incompleted
+            {todos?.filter(({completed}) => !completed)?.length>0? `${todos?.filter(({completed}) => !completed)?.length} Incompleted`:null}
           </span>
         </>
       ) : null}
@@ -75,6 +76,7 @@ const Todos: FC = (): JSX.Element => {
               rules={[{ required: true }, { type: 'string', min: 6 }]}
             >
               <Input
+                data-testid='todo-input'
                 placeholder="Todo"
                 value={todo}
                 allowClear
@@ -86,10 +88,10 @@ const Todos: FC = (): JSX.Element => {
           </div>
           <Form.Item>
             <Space>
-              <Button type="primary" htmlType="submit">
+              <Button data-testid='todo-submit' type="primary" htmlType="submit">
                 Submit
               </Button>
-              <Button htmlType="button" onClick={onFill}>
+              <Button data-testid='todo-fill' htmlType="button" onClick={onFill}>
                 Fill
               </Button>
             </Space>
@@ -101,12 +103,13 @@ const Todos: FC = (): JSX.Element => {
           <Fragment>
             <Divider orientation="left">Todo List</Divider>
             <List
+              data-testid='todo-list'
               header={<Header />}
               // footer={<div>Footer</div>}
               bordered
               dataSource={todos}
               renderItem={({ id, title, completed }) => (
-                <List.Item>
+                <List.Item data-testid='todo-item'>
                   <div className="left">
                     {completed ? (
                       <CheckCircleTwoTone twoToneColor="green" />
@@ -147,6 +150,7 @@ const App: FC = (): JSX.Element => (
   <TodosProvider>
     <Layout headerContent="My todo list" />
     <Todos />
+    <Counts/>
   </TodosProvider>
 )
 export default App

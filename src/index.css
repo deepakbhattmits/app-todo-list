@@ -2,10 +2,11 @@
   --font-color: #333;
   --background-color: #eee;
   --link-color: cornflowerblue;
+  --primary-light: #7ed56f;
 }
 
 [data-theme='dark'] {
-  --font-color: #eee;
+  --font-color: #918b8b;
   --background-color: #282c34;
   --link-color: lightblue;
 }
@@ -13,6 +14,10 @@
 body {
   background-color: var(--background-color);
   color: var(--font-color);
+}
+.ant-divider-inner-text,.ant-form label {
+   color: var(--font-color);
+   
 }
 
 a {

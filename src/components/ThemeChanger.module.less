@@ -1,7 +1,7 @@
 /* Custom Dark Mode Toggle Element */
 .icon {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 .toggleThemeWrapper {
   display: flex;
@@ -69,4 +69,30 @@ input:checked {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.btnTheme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+      border: 0.2rem solid transparent;
+      box-shadow: 0 0.25em 0.25em var(--font-color);
+      text-decoration: none;
+      outline: 0 solid;
+      transition: all 0.4s ease-out;
+       svg  {
+          path {
+      fill: #ff4262;
+        stroke:#ff4262;
+    }
+        }
+      &:hover {
+        border-color: var(--primary-light);
+        box-shadow: 0 0.5em 0.5em var(--font-color);
+        svg path {
+          fill: var(--primary-light);
+           stroke:var(--primary-light);
+          
+        }
+      }
 }

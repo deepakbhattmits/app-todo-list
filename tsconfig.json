@@ -1,7 +1,10 @@
 {
+  "ts-node": {
+   "transpileOnly": true
+  },
   "compilerOptions": {
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext", "es5", "es6", "es7", "es2017"],
+    "lib": ["dom","dom.iterable", "esnext", "es5", "es6", "es7", "es2017"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -9,13 +12,18 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "CommonJS",
+    "baseUrl": ".",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "paths": {
+      "@/*":["./src/*"]
+    }
   },
-  "include": ["src", "./externals.d.ts"]
+  "include": ["src", "./externals.d.ts", "**/*.ts", "**/*.tsx", "src/tests"],
+  "exclude": ["node_modules"]
 }

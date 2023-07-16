@@ -9,6 +9,7 @@ import {
   Typography,
   Divider,
 } from 'antd'
+import styles from './App.module.less'
 import { CloseCircleTwoTone, CheckCircleTwoTone } from '@ant-design/icons'
 import TodosProvider, { TodosContext } from './TodosContext'
 
@@ -40,22 +41,31 @@ const Todos: FC = (): JSX.Element => {
   }
 
   const Header: FC = (): JSX.Element => (
-    <>
-      <span>Total Todo{todos?.length > 1 ? 's' : ''}: </span>
+    <div className={`${styles.main} table__header--wrapper`}>
+      
       {todos?.length > 0 ? (
         <>
+          <div>
+          <span>Total Todo{todos?.length>1? 's':''}: </span>
           <span>
-            {todos?.length} todo{todos?.length > 1 ? 's, ' : ' '}
+            {todos?.length} todo{todos?.length > 1 ? 's ' : ' '}
           </span>
+          </div>
+          <div>
+
         <span>
-            {todos?.filter(({completed}) => completed)?.length>0? `${todos?.filter(({completed}) => completed)?.length} Completed `:null},
+            {todos?.filter(({completed}) => completed)?.length>0? `${todos?.filter(({completed}) => completed)?.length} Completed `:null}
+            </span>
+            <span>
+            {todos?.filter(({completed}) => !completed)?.length>0 &&todos?.filter(({completed}) => completed)?.length>0? ', ' : ' '}
           </span>
           <span>
             {todos?.filter(({completed}) => !completed)?.length>0? `${todos?.filter(({completed}) => !completed)?.length} Incompleted`:null}
           </span>
+          </div>
         </>
       ) : null}
-    </>
+    </div>
   )
 
   return (

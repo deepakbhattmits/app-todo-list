@@ -25,3 +25,15 @@ Then("I should see todo in list", async function () {
   // await pageFixture.page.waitForTimeout(1000);
   expect(pageFixture.page.locator('[data-testid="todo-item"]')).toBeVisible();
 });
+When("User click on {string} button", async function (buttonName: string) {
+  await pageFixture.page.locator(`[data-testid="${buttonName}"]`).click();
+});
+
+Then("I should see input will filled with {string}", async function (todo) {
+  // await pageFixture.page.waitForLoadState();
+  // await pageFixture.page.waitForTimeout(1000);
+  let val = await pageFixture.page
+    .locator('[data-testid="todo-input"]')
+    .inputValue();
+  expect(val).toMatch(todo);
+});

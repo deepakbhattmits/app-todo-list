@@ -3,12 +3,16 @@
   --background-color: #eee;
   --link-color: cornflowerblue;
   --primary-light: #7ed56f;
+  --input-background-color: #eee;
+  --color-black:#000;
 }
 
 [data-theme='dark'] {
   --font-color: #918b8b;
   --background-color: #282c34;
   --link-color: lightblue;
+  --input-background-color: #919b9b;
+  --color-black:#fff;
 }
 
 body {

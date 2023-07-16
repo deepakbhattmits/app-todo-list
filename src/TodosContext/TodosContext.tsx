@@ -34,12 +34,16 @@ const TodosProvider: FC<IProp> = ({ children }) => {
     setTodos(updatedTodo)
   }
 
-  useEffect(() => {
+  useEffect(() =>
+  {
+    // const todosLocal = JSON.parse(localStorage.getItem('todos') || '{}')
     if (todos?.length) {
       localStorage.setItem('todos', JSON.stringify(todos))
-    } else {
-      localStorage.removeItem('todos')
-    }
+    } 
+    // else {
+    //   console.log('remove')
+    //   localStorage.removeItem('todos')
+    // }
   }, [todos])
   useEffect(() => {
     const todosLocal = JSON.parse(localStorage.getItem('todos') || '{}')

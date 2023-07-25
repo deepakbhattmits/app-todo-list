@@ -1,10 +1,10 @@
-Project name : app-todo-list
+# Project name : app-todo-list
 
-# Description of this project
+## Description of this project
 
 User can add todo delete and edit specific todo. User can mark todo as done or undone
 
-# Tech Stack used
+## Tech Stack used
 
 - Latest react js (latest)
 - Typescript
@@ -14,7 +14,7 @@ User can add todo delete and edit specific todo. User can mark todo as done or u
 - Playwright: [Playwright.dev](https://playwright.dev/) end to end testing tool.
 - multiple-cucumber-html-reporter: to generate playwright test reports
 
-# Steps to start this app
+## Steps to start this app
 
 1. Clone this repository
 2. Navigate into the project folder, open vs code integrated terminal or regular teminal (make sure navigate into project)

@@ -27,7 +27,7 @@
     "start": "react-app-rewired  start",
     "build": "react-app-rewired  build",
     "test": "cucumber-js test || true",
-    "posttest":"npx ts-node src/helper/report.ts",
+    "posttest": "npx ts-node src/helper/report.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

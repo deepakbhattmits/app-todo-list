@@ -3,3 +3,8 @@
 2. Run command: `utserver -settingspath /opt/utorrent-server-*/ &`
 
 3. Open browser with http://localhost:8080/gui
+
+input
+input1
+input2
+input3

@@ -9,6 +9,7 @@ const Layout: FC<IProps> = ({ headerContent }): JSX.Element => {
     <header data-testid='header' className={styles.header}>
       {headerContent}
       <ThemeChanger />
+       
     </header>
   )
 }

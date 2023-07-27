@@ -11,9 +11,13 @@ import {
   Modal,
 } from "antd";
 import styles from "./App.module.less";
-import { CloseCircleTwoTone, CheckCircleTwoTone } from "@ant-design/icons";
+import {
+  CloseCircleTwoTone,
+  CheckCircleTwoTone,
+  TagsOutlined,
+} from "@ant-design/icons";
 import TodosProvider, { TodosContext } from "./TodosContext";
-
+import TagsInput from "./components/TagsInut";
 import "./App.less";
 import ButtonComp from "./components/ButtonComp";
 // import InputComp from './components/InputComp'
@@ -22,6 +26,8 @@ import Counts from "./components/Counts";
 import { Itodos } from "./TodosContext/types";
 const Todos: FC = (): JSX.Element => {
   const [form] = Form.useForm();
+  const [showTagsInput, setShowTagsInput] = useState<boolean>(false);
+  const [tags, setTags] = useState([]);
   const [todo, setTodo] = useState<string>("");
   const [editTodoInput, setEditTodoInput] = useState<string>("");
   const {
@@ -182,6 +188,12 @@ const Todos: FC = (): JSX.Element => {
             </Space>
           </Form.Item>
         </Form>
+        <Button
+          type="primary"
+          shape="circle"
+          onClick={() => setShowTagsInput(true)}
+          icon={<TagsOutlined />}
+        />
       </div>
       <div>
         <ul className="todo-list">
@@ -235,7 +247,24 @@ const Todos: FC = (): JSX.Element => {
         </ul>
       </div>
       <Modal
-        title="Vertically centered modal dialog"
+        title="Tags input"
+        centered
+        open={showTagsInput}
+        onOk={() => {}}
+        onCancel={() => setShowTagsInput(false)}
+      >
+        <TagsInput
+          value={tags}
+          maxLength={50}
+          isNotDuplicate
+          onChange={(val) => {
+            setTags(val);
+            console.log(tags);
+          }}
+        />
+      </Modal>
+      <Modal
+        title="Edit todo"
         centered
         open={!!editTodoId?.length}
         onOk={handleEdit}

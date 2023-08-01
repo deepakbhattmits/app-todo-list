@@ -15,19 +15,24 @@ import {
   CloseCircleTwoTone,
   CheckCircleTwoTone,
   TagsOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import TodosProvider, { TodosContext } from "./TodosContext";
-import TagsInput from "./components/TagsInut";
+// import TagsInput from "./components/TagsInut";
 import "./App.less";
 import ButtonComp from "./components/ButtonComp";
 // import InputComp from './components/InputComp'
 import Layout from "./components/Layout";
 import Counts from "./components/Counts";
 import { Itodos } from "./TodosContext/types";
+import NewTagsInput from "./components/NewTagsInput";
 const Todos: FC = (): JSX.Element => {
+  const { Text } = Typography;
   const [form] = Form.useForm();
+  const [formTags] = Form.useForm();
   const [showTagsInput, setShowTagsInput] = useState<boolean>(false);
-  const [tags, setTags] = useState([]);
+  const [tagsState, setTagsState] = useState<{ tag: string }[]>([{ tag: "" }]);
   const [todo, setTodo] = useState<string>("");
   const [editTodoInput, setEditTodoInput] = useState<string>("");
   const {
@@ -133,6 +138,14 @@ const Todos: FC = (): JSX.Element => {
   //     </>
   //   );
   // };
+  const handleTagsOk = () => {
+    const allTagsState = tagsState?.map((el, index) => ({
+      tag: el,
+    }));
+    console.log(">>>AllTagsState : ", allTagsState);
+    formTags?.setFieldsValue({ tags: allTagsState });
+    console.log(">>formTags : ", formTags.getFieldValue("tags"));
+  };
   useEffect(() => {
     const foundEditTodo: Itodos | undefined = todos?.find(
       (todo) => !!todo.id?.match(editTodoId)?.length
@@ -141,6 +154,11 @@ const Todos: FC = (): JSX.Element => {
       setEditTodoInput(!!foundEditTodo?.title ? foundEditTodo?.title : "");
     }
   }, [editTodoId, todos]);
+  useEffect(() => {
+    console.log(">>formTags : ", formTags.getFieldValue("tags"));
+    let uFormTagsValues = formTags.getFieldValue("tags");
+    setTagsState(uFormTagsValues);
+  }, [formTags]);
   return (
     <div className="TodoArea">
       <div>
@@ -194,6 +212,71 @@ const Todos: FC = (): JSX.Element => {
           onClick={() => setShowTagsInput(true)}
           icon={<TagsOutlined />}
         />
+
+        <Form
+          name="dynamic_form_nest_item"
+          form={formTags}
+          onFinish={() => {}}
+          style={{ maxWidth: 600 }}
+          autoComplete="off"
+          onFieldsChange={(_, allFields) => {
+            console.log("on change allFields : ", allFields);
+            // setTagsState()
+          }}
+        >
+          <Form.List name="tags">
+            {(fields, { add, remove }) => {
+              console.log("fields : ", fields);
+              return (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space
+                      key={key}
+                      style={{ display: "flex", marginBottom: 8 }}
+                      align="baseline"
+                    >
+                      <Form.Item
+                        {...restField}
+                        name={[name, "tag"]}
+                        rules={[{ required: true, message: "Missing tags" }]}
+                      >
+                        <Input placeholder="Enter tag" />
+                      </Form.Item>
+                      <MinusCircleOutlined
+                        onClick={() => {
+                          remove(name);
+                          console.log(">>name : ", name);
+                          const uTagsState = tagsState?.filter(
+                            (_, index) => index !== name
+                          );
+                          console.log("uTagsState :", uTagsState);
+
+                          setTagsState(uTagsState);
+                        }}
+                      />
+                      <Text strong>{key}</Text>
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Add field
+                    </Button>
+                  </Form.Item>
+                </>
+              );
+            }}
+          </Form.List>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
       <div>
         <ul className="todo-list">
@@ -250,16 +333,23 @@ const Todos: FC = (): JSX.Element => {
         title="Tags input"
         centered
         open={showTagsInput}
-        onOk={() => {}}
+        onOk={handleTagsOk}
         onCancel={() => setShowTagsInput(false)}
       >
-        <TagsInput
+        {/* <TagsInput
           value={tags}
           maxLength={50}
           isNotDuplicate
           onChange={(val) => {
             setTags(val);
             console.log(tags);
+          }}
+        /> */}
+        <NewTagsInput
+          tags={tagsState}
+          onChange={(val: string | any) => {
+            let obj: { tag: string } = { tag: val };
+            setTagsState([...tagsState, obj]);
           }}
         />
       </Modal>
